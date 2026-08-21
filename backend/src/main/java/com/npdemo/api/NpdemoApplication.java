@@ -9,4 +9,3 @@ public class NpdemoApplication {
         SpringApplication.run(NpdemoApplication.class, args);
     }
 }
-

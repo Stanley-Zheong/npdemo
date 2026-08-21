@@ -22,4 +22,3 @@ class HealthControllerTest {
                 .andExpect(jsonPath("$.service").value("npdemo-api"));
     }
 }
-

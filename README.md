@@ -57,4 +57,3 @@ docker compose up --build
 ```
 
 See [docs/architecture.md](docs/architecture.md) for boundaries and [AGENTS.md](AGENTS.md) before using a coding agent.
-

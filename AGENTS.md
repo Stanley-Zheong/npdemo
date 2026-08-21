@@ -33,4 +33,3 @@ Keep this repository a small, conventional Java/Vue application. Build only beha
 - `make test` passes; `make build` passes when applicable.
 - No secret, generated output, debug artifact, or unrelated refactor is included.
 - Documentation remains accurate.
-

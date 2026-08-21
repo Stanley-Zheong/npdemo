@@ -17,4 +17,3 @@ dev-web:
 clean:
 	cd backend && mvn clean
 	rm -rf frontend/dist frontend/coverage
-

@@ -6,4 +6,3 @@ export async function getHealth(): Promise<HealthResponse> {
   if (!response.ok) throw new Error(`Health request failed with status ${response.status}`)
   return response.json() as Promise<HealthResponse>
 }
-

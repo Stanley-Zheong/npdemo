@@ -28,4 +28,3 @@ onMounted(async () => {
     </section>
   </main>
 </template>
-

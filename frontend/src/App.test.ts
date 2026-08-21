@@ -19,4 +19,3 @@ describe('App', () => {
     expect(wrapper.get('[role="status"]').text()).toBe('API is unavailable')
   })
 })
-

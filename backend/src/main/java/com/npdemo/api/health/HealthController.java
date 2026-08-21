@@ -14,4 +14,3 @@ public class HealthController {
 
     public record HealthResponse(String status, String service) {}
 }
-

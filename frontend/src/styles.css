@@ -9,4 +9,3 @@ h1 { margin: 0; font-size: clamp(3rem, 10vw, 5.5rem); letter-spacing: -.06em; li
 .status { display: flex; align-items: center; gap: .65rem; margin: 0; font-weight: 650; }
 .status span { width: .7rem; height: .7rem; border-radius: 50%; background: #d97706; }
 .status.healthy span { background: #16a34a; }
-

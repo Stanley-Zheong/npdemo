@@ -20,4 +20,3 @@ COPY --from=api-build /workspace/backend/target/npdemo-api.jar app.jar
 USER app
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "/app/app.jar"]
-
