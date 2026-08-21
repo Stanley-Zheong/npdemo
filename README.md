@@ -56,4 +56,11 @@ cp .env.example .env
 docker compose up --build
 ```
 
-See [docs/architecture.md](docs/architecture.md) for boundaries and [AGENTS.md](AGENTS.md) before using a coding agent.
+Product and delivery documentation:
+
+- [Product requirements](docs/prd.md)
+- [Delivery plan and acceptance criteria](docs/delivery-plan.md)
+- [System test cases](docs/hs-test-cases-all/README.md)
+- [Architecture](docs/architecture.md)
+
+Read [AGENTS.md](AGENTS.md) before using a coding agent.
