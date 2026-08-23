@@ -96,19 +96,35 @@ function withSerializedBytes(payload) {
 
 export function queryAssets(options) {
   const root = repoRoot()
-  const queryTokens = tokensFrom(`${options.caseId} ${options.query}`)
+  const caseId = String(options.caseId ?? '').trim()
+  const exactCase = caseId.toLowerCase()
+  const exactCaseRequired = exactCase.length > 0
+  const queryTokens = tokensFrom(options.query)
   const files = walkFiles(root, ['docs', 'test'])
   const results = []
+  let exactCaseFound = false
 
   for (const file of files) {
     const text = readFileSync(file, 'utf8')
     const lines = text.split(/\r?\n/)
     const matches = []
+    const seenLines = new Set()
     for (let index = 0; index < lines.length; index += 1) {
-      if (lineMatches(lines[index], queryTokens)) {
+      if (exactCaseRequired && lines[index].toLowerCase().includes(exactCase)) {
         matches.push({ line: index + 1, text: lines[index].slice(0, 300) })
+        seenLines.add(index + 1)
+        exactCaseFound = true
       }
       if (matches.length >= 12) break
+    }
+    if (!exactCaseRequired || matches.length > 0) {
+      for (let index = 0; index < lines.length; index += 1) {
+        if (seenLines.has(index + 1)) continue
+        if (lineMatches(lines[index], queryTokens)) {
+          matches.push({ line: index + 1, text: lines[index].slice(0, 300) })
+        }
+        if (matches.length >= 12) break
+      }
     }
     if (matches.length > 0) {
       results.push({ path: relative(root, file), matches })
@@ -116,9 +132,11 @@ export function queryAssets(options) {
   }
 
   const payload = {
-    ok: true,
+    ok: !exactCaseRequired || exactCaseFound,
     skill: options.skill,
-    case_id: options.caseId,
+    case_id: caseId,
+    exact_case_required: exactCaseRequired,
+    exact_case_found: exactCaseFound,
     query: options.query,
     max_bytes: options.maxBytes,
     result_count: results.length,

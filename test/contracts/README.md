@@ -4,6 +4,10 @@ Each file in this directory owns one executable primary claim. A contract must
 not combine unrelated permissions, data mutations, UI behavior, and integration
 behavior in one case.
 
+When one product behavior has success and failure UI states, each state gets a
+separate contract and spec assertion. A passing-path contract must not accept a
+failure message as successful evidence.
+
 Required fields:
 
 ```yaml

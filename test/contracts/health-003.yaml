@@ -1,0 +1,29 @@
+case_id: HEALTH-003
+source:
+  issue: "initial repository vertical slice"
+  code:
+    - frontend/src/App.vue
+    - frontend/src/api/health.ts
+claim: "The frontend renders the unavailable state when the health request fails."
+fixture:
+  type: "network-failure"
+  data: "running frontend with the /api/health request aborted by the test harness"
+actions:
+  - "Abort the frontend /api/health request."
+  - "Open the frontend home page."
+oracle:
+  - "The page status region reports API is unavailable."
+negative_oracle:
+  - "The healthy-state text is not accepted as proof of the failure path."
+cleanup:
+  type: "none"
+  reason: "The route abort is scoped to the Playwright page."
+environment:
+  local: "frontend on the configured NPDEMO_WEB_PORT"
+  ci: "Playwright starts the frontend and controls the failing request."
+isolation:
+  worker_safe: true
+  mutable_resources: []
+known_issues: []
+generation_ready: true
+not_ready_reason: ""

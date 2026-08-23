@@ -3,25 +3,23 @@ source:
   issue: "initial repository vertical slice"
   code:
     - backend/src/main/java/com/npdemo/api/health/HealthController.java
-    - frontend/src/api/health.ts
-claim: "The starter app exposes an API health endpoint that the frontend can read."
+claim: "The API health endpoint returns the service health payload."
 fixture:
   type: "read-only"
-  data: "running npdemo backend and frontend"
+  data: "running npdemo backend"
 actions:
-  - "Request GET /api/health."
-  - "Open the frontend home page."
+  - "Request GET /api/health directly from the backend."
 oracle:
-  - "API response status is 200 with status=UP and service=npdemo-api."
-  - "Frontend status text reports npdemo-api is UP when the API succeeds."
+  - "API response status is 200."
+  - "API response JSON equals {status: UP, service: npdemo-api}."
 negative_oracle:
-  - "Frontend status text reports API is unavailable when fetch fails."
+  - "No frontend rendering or unavailable-state behavior is claimed by this contract."
 cleanup:
   type: "none"
-  reason: "Read-only health checks do not mutate business state."
+  reason: "The health endpoint does not mutate business state."
 environment:
-  local: "backend on 8080, frontend on 5173"
-  ci: "unit tests use MockMvc and mocked fetch without external services"
+  local: "backend on the configured NPDEMO_API_PORT, default 18082"
+  ci: "Playwright webServer starts the backend on NPDEMO_API_PORT before executing the spec."
 isolation:
   worker_safe: true
   mutable_resources: []

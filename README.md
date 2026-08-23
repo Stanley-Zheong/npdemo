@@ -46,6 +46,7 @@ Open <http://localhost:5173>. Vite proxies `/api` to the backend at port 8080.
 
 ```bash
 make test
+make qa-health
 make build
 ```
 
@@ -53,11 +54,13 @@ make build
 test automation lifecycle. Maven uses the repository-local `.cache/maven`
 directory through `backend/.mvn/maven.config`, so a corrupt host or managed
 runtime Maven cache does not decide whether the project can be verified.
+`make qa-health` runs the Playwright health smoke through the same executable
+path used by CI.
 
 The `test/` directory contains the current automation contracts, fixture/data
-ownership notes, and Playwright smoke-spec entry point. V1 business specs remain
-blocked until the corresponding API/UI vertical slice exists and the case's
-contract is marked generation-ready.
+ownership notes, and Playwright health-smoke execution path. V1 business specs
+remain blocked until the corresponding API/UI vertical slice exists and the
+case's contract is marked generation-ready.
 
 For a production-like local stack:
 

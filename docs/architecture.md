@@ -19,6 +19,8 @@ QA automation assets live under `test/`. Canonical testcase prose remains in
 `docs/hs-test-cases-all/`; `test/contracts/` records executable claim contracts,
 `test/fixtures/` records data ownership and cleanup, `test/specs/` owns
 Playwright specs, and `sbin/skill-asset-query.mjs` provides bounded evidence
-lookup for Jarvis test lifecycle stages.
+lookup for Jarvis test lifecycle stages. The Vite dev proxy defaults to
+`http://localhost:8080` and can be redirected with `NPDEMO_API_PROXY_TARGET` for
+isolated Playwright runs.
 
 Add backend packages by business feature, database migrations with the first persisted object, Vue routes when user workflows need stable URLs, and authentication only after roles and permissions are specified.

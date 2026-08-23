@@ -4,7 +4,9 @@ Current executable fixture:
 
 | Fixture | Owner | Mutation | Readback | Cleanup | Parallel isolation |
 | --- | --- | --- | --- | --- | --- |
-| health-service | application runtime | none | `/api/health` and frontend status text | none | worker-safe |
+| health-api | backend runtime | none | `/api/health` response body | none | worker-safe |
+| health-ui-success | frontend runtime + backend runtime | none | frontend status text `npdemo-api is UP` | none | worker-safe |
+| health-ui-api-failure | Playwright page route | none | frontend status text `API is unavailable` | route abort scoped to page | worker-safe |
 
 Business fixtures are not approved yet. Each future fixture must record:
 

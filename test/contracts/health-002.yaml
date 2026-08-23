@@ -1,0 +1,28 @@
+case_id: HEALTH-002
+source:
+  issue: "initial repository vertical slice"
+  code:
+    - frontend/src/App.vue
+    - frontend/src/api/health.ts
+claim: "The frontend renders the healthy API state when the health request succeeds."
+fixture:
+  type: "read-only"
+  data: "running npdemo backend and frontend"
+actions:
+  - "Open the frontend home page."
+oracle:
+  - "The page status region reports npdemo-api is UP."
+negative_oracle:
+  - "The unavailable-state text is not accepted as proof of the healthy path."
+cleanup:
+  type: "none"
+  reason: "The home page health read does not mutate business state."
+environment:
+  local: "backend on the configured NPDEMO_API_PORT, frontend on NPDEMO_WEB_PORT"
+  ci: "Playwright webServer starts both services and points the Vite /api proxy at the configured API URL."
+isolation:
+  worker_safe: true
+  mutable_resources: []
+known_issues: []
+generation_ready: true
+not_ready_reason: ""
