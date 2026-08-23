@@ -1,0 +1,30 @@
+case_id: HEALTH-001
+source:
+  issue: "initial repository vertical slice"
+  code:
+    - backend/src/main/java/com/npdemo/api/health/HealthController.java
+    - frontend/src/api/health.ts
+claim: "The starter app exposes an API health endpoint that the frontend can read."
+fixture:
+  type: "read-only"
+  data: "running npdemo backend and frontend"
+actions:
+  - "Request GET /api/health."
+  - "Open the frontend home page."
+oracle:
+  - "API response status is 200 with status=UP and service=npdemo-api."
+  - "Frontend status text reports npdemo-api is UP when the API succeeds."
+negative_oracle:
+  - "Frontend status text reports API is unavailable when fetch fails."
+cleanup:
+  type: "none"
+  reason: "Read-only health checks do not mutate business state."
+environment:
+  local: "backend on 8080, frontend on 5173"
+  ci: "unit tests use MockMvc and mocked fetch without external services"
+isolation:
+  worker_safe: true
+  mutable_resources: []
+known_issues: []
+generation_ready: true
+not_ready_reason: ""

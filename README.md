@@ -49,6 +49,16 @@ make test
 make build
 ```
 
+`make test` also runs the repository QA asset query smoke test used by the
+test automation lifecycle. Maven uses the repository-local `.cache/maven`
+directory through `backend/.mvn/maven.config`, so a corrupt host or managed
+runtime Maven cache does not decide whether the project can be verified.
+
+The `test/` directory contains the current automation contracts, fixture/data
+ownership notes, and Playwright smoke-spec entry point. V1 business specs remain
+blocked until the corresponding API/UI vertical slice exists and the case's
+contract is marked generation-ready.
+
 For a production-like local stack:
 
 ```bash
