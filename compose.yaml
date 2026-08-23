@@ -15,6 +15,10 @@ services:
 
   app:
     build: .
+    environment:
+      DATABASE_URL: jdbc:postgresql://db:5432/${POSTGRES_DB:-npdemo}
+      DATABASE_USERNAME: ${POSTGRES_USER:-npdemo}
+      DATABASE_PASSWORD: ${POSTGRES_PASSWORD:-npdemo}
     ports:
       - "8080:8080"
     depends_on:

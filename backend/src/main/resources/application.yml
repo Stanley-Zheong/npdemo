@@ -1,5 +1,9 @@
 spring:
   application:
     name: npdemo-api
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/npdemo}
+    username: ${DATABASE_USERNAME:npdemo}
+    password: ${DATABASE_PASSWORD:npdemo}
 server:
   port: ${SERVER_PORT:8080}

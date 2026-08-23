@@ -24,3 +24,9 @@ lookup for Jarvis test lifecycle stages. The Vite dev proxy defaults to
 isolated Playwright runs.
 
 Add backend packages by business feature, database migrations with the first persisted object, Vue routes when user workflows need stable URLs, and authentication only after roles and permissions are specified.
+
+The course-draft slice persists PostgreSQL data through Flyway and exposes management endpoints at
+`/api/admin/course-drafts`. Create and update currently execute at an explicit training-admin service
+boundary while full IAM remains unimplemented. Draft updates require the current `version`; stale writes
+return `COURSE_DRAFT_VERSION_CONFLICT`. API failures use a stable `code`, human-readable `message`,
+field errors, and timestamp.
