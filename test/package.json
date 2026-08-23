@@ -1,0 +1,12 @@
+{
+  "name": "npdemo-qa-automation",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "test:health": "playwright test --config ./playwright.config.ts"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.62.1"
+  }
+}

@@ -8,4 +8,10 @@ frontend/node_modules/
 frontend/dist/
 frontend/coverage/
 frontend/*.tsbuildinfo
+test/node_modules/
+test/test-results/
+test/playwright-report/
+.cache/
+test-results/
+playwright-report/
 *.log
