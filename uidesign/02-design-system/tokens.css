@@ -1,0 +1,2 @@
+/* Canonical runtime tokens live in ../html/assets/tokens.css. This stable design reference documents their names. */
+:root{--brand:#176b5d;--brand-dark:#104a41;--brand-soft:#e8f5f2;--ink:#182522;--muted:#687773;--line:#dce6e3;--surface:#fff;--bg:#f3f6f5;--danger:#c43d4b;--warning:#a86300;--success:#16805f;--radius:12px;--space-unit:4px;--breakpoint-mobile:767px;--breakpoint-desktop:1280px}
