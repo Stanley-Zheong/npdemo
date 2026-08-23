@@ -1,4 +1,4 @@
-import { execFileSync } from 'node:child_process'
+import { execFileSync, spawnSync } from 'node:child_process'
 import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
 
@@ -45,9 +45,30 @@ describe('skill asset query', () => {
     assert.ok(canonicalDoc.matches.some((match) => match.text.includes('OPS-010')))
   })
 
+  it('does not treat case id prefixes as exact matches', () => {
+    const prefixOnlyCaseId = ['IAM', '005'].join('-')
+    const result = spawnSync(process.execPath, [
+      'sbin/skill-asset-query.mjs',
+      '--skill',
+      'test-case-review',
+      '--case-id',
+      prefixOnlyCaseId,
+      '--query',
+      'IAM',
+      '--max-bytes',
+      '20000',
+    ], { encoding: 'utf8' })
+
+    assert.equal(result.status, 1)
+    const payload = JSON.parse(result.stdout)
+    assert.equal(payload.ok, false)
+    assert.equal(payload.exact_case_found, false)
+    assert.equal(payload.result_count, 0)
+  })
+
   it('fails closed when a requested exact case id is absent', () => {
     const missingCaseId = ['NOPE', '999'].join('-')
-    const stdout = execFileSync(process.execPath, [
+    const result = spawnSync(process.execPath, [
       'sbin/skill-asset-query.mjs',
       '--skill',
       'test-case-review',
@@ -59,7 +80,8 @@ describe('skill asset query', () => {
       '20000',
     ], { encoding: 'utf8' })
 
-    const payload = JSON.parse(stdout)
+    assert.equal(result.status, 1)
+    const payload = JSON.parse(result.stdout)
     assert.equal(payload.ok, false)
     assert.equal(payload.exact_case_found, false)
     assert.equal(payload.result_count, 0)

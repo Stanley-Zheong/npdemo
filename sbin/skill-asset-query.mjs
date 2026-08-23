@@ -85,6 +85,14 @@ function lineMatches(line, tokens) {
   return tokens.some((token) => lower.includes(token))
 }
 
+function regexpEscape(value) {
+  return String(value).replace(/[\\^$.*+?()[\]{}|]/g, '\\$&')
+}
+
+function caseIdPattern(caseId) {
+  return new RegExp(`(^|[^a-z0-9_-])${regexpEscape(caseId)}($|[^a-z0-9_-])`, 'i')
+}
+
 function withSerializedBytes(payload) {
   let next = { ...payload, bytes: 0 }
   while (true) {
@@ -97,8 +105,8 @@ function withSerializedBytes(payload) {
 export function queryAssets(options) {
   const root = repoRoot()
   const caseId = String(options.caseId ?? '').trim()
-  const exactCase = caseId.toLowerCase()
-  const exactCaseRequired = exactCase.length > 0
+  const exactCaseRequired = caseId.length > 0
+  const exactCaseMatcher = exactCaseRequired ? caseIdPattern(caseId) : null
   const queryTokens = tokensFrom(options.query)
   const files = walkFiles(root, ['docs', 'test'])
   const results = []
@@ -110,7 +118,7 @@ export function queryAssets(options) {
     const matches = []
     const seenLines = new Set()
     for (let index = 0; index < lines.length; index += 1) {
-      if (exactCaseRequired && lines[index].toLowerCase().includes(exactCase)) {
+      if (exactCaseMatcher?.test(lines[index])) {
         matches.push({ line: index + 1, text: lines[index].slice(0, 300) })
         seenLines.add(index + 1)
         exactCaseFound = true
@@ -169,6 +177,7 @@ function main() {
     if (!args.skill) throw new Error('--skill is required')
     const result = queryAssets(args)
     console.log(JSON.stringify(result, null, 2))
+    if (!result.ok) process.exit(1)
   } catch (error) {
     console.error(error.message)
     console.error(usage())
