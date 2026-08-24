@@ -1,0 +1,29 @@
+case_id: CRS-001B
+source:
+  testcase: docs/hs-test-cases-all/online-learning-exam-system.md
+  code: backend/src/main/java/com/npdemo/api/course/CourseDraftService.java
+claim: "Course draft codes are unique and a rejected duplicate does not change the existing draft."
+fixture:
+  type: api_create
+  data: "One new course draft with a case/run/worker-scoped code."
+actions:
+  - "POST the owned draft, then POST a second draft with the same code and different fields."
+  - "GET the first draft by ID after the rejected request."
+oracle:
+  - "The duplicate create returns 409 with COURSE_CODE_ALREADY_EXISTS."
+  - "GET readback still returns every original business field and version 0."
+negative_oracle:
+  - "No assertion is made about concurrent duplicate requests or codes owned by another run."
+cleanup:
+  type: environment_disposal
+  action: "Dispose the run-owned H2 process or CI PostgreSQL service after the suite; never run this mutating case against a shared database."
+environment:
+  local: "Run-owned backend and disposable database on NPDEMO_API_BASE_URL; default http://127.0.0.1:18082."
+  ci: "Job-owned PostgreSQL service plus the Playwright-managed backend; NPDEMO_QA_DISPOSABLE_DB=1 is required."
+isolation:
+  worker_safe: true
+  mutable_resources: ["one newly created course_drafts row in the run-owned database"]
+  naming: "CRS-001B-<bounded-run-hash>-W<worker-index>-R<retry>"
+known_issues: []
+generation_ready: true
+not_ready_reason: ""

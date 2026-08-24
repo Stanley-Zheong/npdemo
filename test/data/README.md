@@ -1,9 +1,9 @@
 # Test Data Scripts
 
-No V1 business data script is generation-ready yet. The current repository has
-only read-only health smoke fixtures plus a Playwright-scoped network failure
-fixture, so data mutation scripts would be placeholders rather than executable
-evidence.
+`course-draft.ts` generates case/run/worker-scoped input for `CRS-001A` and
+`CRS-001B`. The owning specs create the rows through the public API and read
+them back by returned ID. These mutating cases run only against a database
+owned and disposed by the current test run.
 
 Future data scripts must live beside a reviewed contract and include:
 

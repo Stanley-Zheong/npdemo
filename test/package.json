@@ -4,7 +4,9 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "test:health": "playwright test --config ./playwright.config.ts"
+    "test:health": "playwright test --config ./playwright.config.ts specs/health-smoke.spec.ts",
+    "test:course-draft": "playwright test --config ./playwright.config.ts specs/course-draft.spec.ts --workers=2",
+    "test:all": "playwright test --config ./playwright.config.ts --workers=2"
   },
   "devDependencies": {
     "@playwright/test": "1.62.1"

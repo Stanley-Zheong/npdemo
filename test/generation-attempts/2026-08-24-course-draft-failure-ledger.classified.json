@@ -1,0 +1,15 @@
+{
+  "source_run": 32686933617,
+  "target_commit": "47d4e16f862a6f689ee314f830a6eda74be8bc24",
+  "failures": [
+    {
+      "case_ids": ["CRS-001A", "CRS-001B"],
+      "disposition": "product_bug_candidate",
+      "first_cause": "PostgreSQL cannot infer a JDBC type for java.time.Instant parameters bound to created_at and updated_at.",
+      "evidence": "Both create requests returned 500 on the job-owned PostgreSQL service; same-lane retries failed with org.postgresql.util.PSQLException from CourseDraftRepository.insert.",
+      "known_issue": null,
+      "repair": "Bind UTC OffsetDateTime values, which the PostgreSQL JDBC driver supports for TIMESTAMP WITH TIME ZONE.",
+      "verification": "make test and the controlled two-worker H2 lane passed; PostgreSQL-backed CI rerun pending."
+    }
+  ]
+}

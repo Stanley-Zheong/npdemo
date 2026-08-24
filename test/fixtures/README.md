@@ -7,8 +7,9 @@ Current executable fixture:
 | health-api | backend runtime | none | `/api/health` response body | none | worker-safe |
 | health-ui-success | frontend runtime + backend runtime | none | frontend status text `npdemo-api is UP` | none | worker-safe |
 | health-ui-api-failure | Playwright page route | none | frontend status text `API is unavailable` | route abort scoped to page | worker-safe |
+| course-draft-owned | `CRS-001A` / `CRS-001B` spec | POST one code scoped by case, run, worker, and retry | GET returned Location | dispose the run-owned database; shared databases are prohibited | bounded run hash plus worker/retry suffix |
 
-Business fixtures are not approved yet. Each future fixture must record:
+Each future fixture must record:
 
 - template object or factory name;
 - owning case ID and worker/run ID suffix;

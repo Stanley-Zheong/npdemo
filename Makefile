@@ -1,4 +1,4 @@
-.PHONY: test build qa-assets qa-health dev-api dev-web clean
+.PHONY: test build qa-assets qa-health qa-course-draft dev-api dev-web clean
 
 NPM_CONFIG_CACHE ?= $(CURDIR)/.cache/npm
 
@@ -16,6 +16,9 @@ qa-assets:
 
 qa-health:
 	cd test && npm_config_cache="$(NPM_CONFIG_CACHE)" npm ci && npx playwright install chromium && npm run test:health
+
+qa-course-draft:
+	cd test && npm_config_cache="$(NPM_CONFIG_CACHE)" npm ci && npx playwright install chromium && ./run-course-draft-local.sh
 
 dev-api:
 	cd backend && mvn spring-boot:run
