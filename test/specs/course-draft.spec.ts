@@ -12,10 +12,11 @@ test('CRS-001A creates and reopens a course draft', async ({ request }, testInfo
   const created = await request.post(`${apiBaseUrl}/api/admin/course-drafts`, {
     data: { ...draft, code: ` ${draft.code} ` },
   })
-  expect(created.status()).toBe(201)
+  const createdText = await created.text()
+  expect(created.status(), createdText).toBe(201)
   const location = created.headers().location
   expect(location).toMatch(/^\/api\/admin\/course-drafts\/[0-9a-f-]+$/)
-  const createdBody = await created.json()
+  const createdBody = JSON.parse(createdText)
 
   expect(createdBody).toMatchObject({ ...draft, status: 'DRAFT', createdBy: 'training-admin', version: 0 })
   const readback = await request.get(`${apiBaseUrl}${location}`)
@@ -26,7 +27,8 @@ test('CRS-001A creates and reopens a course draft', async ({ request }, testInfo
 test('CRS-001B rejects a duplicate code without changing the original', async ({ request }, testInfo) => {
   const draft = courseDraftData('CRS-001B', testInfo)
   const created = await request.post(`${apiBaseUrl}/api/admin/course-drafts`, { data: draft })
-  expect(created.status()).toBe(201)
+  const createdText = await created.text()
+  expect(created.status(), createdText).toBe(201)
   const location = created.headers().location
   expect(location).toBeTruthy()
 
