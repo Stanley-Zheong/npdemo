@@ -63,6 +63,8 @@ jobs:
       DATABASE_URL: jdbc:postgresql://127.0.0.1:5432/npdemo
       DATABASE_USERNAME: npdemo
       DATABASE_PASSWORD: npdemo
+      NPDEMO_QA_RUN_ID: ${{ github.run_id }}-${{ github.run_attempt }}
+      NPDEMO_QA_DISPOSABLE_DB: "1"
     services:
       postgres:
         image: postgres:17-alpine
@@ -107,5 +109,5 @@ jobs:
         working-directory: test
       - run: npx playwright install --with-deps chromium
         working-directory: test
-      - run: npm run test:health
+      - run: npm run test:all
         working-directory: test

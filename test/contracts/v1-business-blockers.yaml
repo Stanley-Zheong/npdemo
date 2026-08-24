@@ -3,7 +3,7 @@ source:
   issue: "https://github.com/Stanley-Zheong/npdemo/issues/7"
   testcase: docs/hs-test-cases-all/online-learning-exam-system.md
 generation_ready: false
-not_ready_reason: "The V1 business API, persistence, auth/session, UI routes, fixture builders, and cleanup contracts are not implemented yet."
+not_ready_reason: "Except for CRS-001A and CRS-001B, the V1 business APIs, auth/session, UI routes, fixture builders, and cleanup contracts are not implemented yet."
 required_before_spec_generation:
   - "Select one approved case with one primary claim."
   - "Implement or point to the exact API/UI behavior under test."
@@ -12,7 +12,7 @@ required_before_spec_generation:
 blocked_case_examples:
   - case_id: IAM-005C
     missing_axis: "role management API and audit persistence"
-  - case_id: CRS-001
-    missing_axis: "course API, persistence, unique code fixture, cleanup"
+  - case_id: CRS-002
+    missing_axis: "course publication API, material/question/rule fixtures, and unchanged-state readback"
   - case_id: EXM-001
     missing_axis: "exam state model, attempt locking, idempotent readback"

@@ -1,0 +1,29 @@
+case_id: CRS-001A
+source:
+  testcase: docs/hs-test-cases-all/online-learning-exam-system.md
+  code: backend/src/main/java/com/npdemo/api/course/CourseDraftController.java
+claim: "A training administrator can create a course draft and read the persisted fields back by its returned ID."
+fixture:
+  type: api_create
+  data: "A new course draft whose code contains the case ID, run ID, and worker index."
+actions:
+  - "POST /api/admin/course-drafts with every field accepted by the current create contract."
+  - "GET the Location returned by the create response."
+oracle:
+  - "Create returns 201 and a draft ID, DRAFT status, training-admin creator, and version 0."
+  - "Independent GET readback returns the normalized code and every supplied field."
+negative_oracle:
+  - "The test does not claim publication, authorization, material, question, or exam behavior."
+cleanup:
+  type: environment_disposal
+  action: "Dispose the run-owned H2 process or CI PostgreSQL service after the suite; never run this mutating case against a shared database."
+environment:
+  local: "Run-owned backend and disposable database on NPDEMO_API_BASE_URL; default http://127.0.0.1:18082."
+  ci: "Job-owned PostgreSQL service plus the Playwright-managed backend; NPDEMO_QA_DISPOSABLE_DB=1 is required."
+isolation:
+  worker_safe: true
+  mutable_resources: ["one newly created course_drafts row in the run-owned database"]
+  naming: "CRS-001A-<bounded-run-hash>-W<worker-index>-R<retry>"
+known_issues: []
+generation_ready: true
+not_ready_reason: ""
