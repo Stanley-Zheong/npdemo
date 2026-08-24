@@ -28,6 +28,8 @@ export default defineConfig({
       url: `${apiBaseUrl}/api/health`,
       timeout: 120000,
       reuseExistingServer: !isCI,
+      stdout: isCI ? 'pipe' : 'ignore',
+      stderr: 'pipe',
     },
     {
       command: `npm run dev -- --host 127.0.0.1 --port ${webPort}`,
