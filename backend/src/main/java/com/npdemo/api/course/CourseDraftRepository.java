@@ -3,6 +3,7 @@ package com.npdemo.api.course;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.Instant;
+import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -32,8 +33,8 @@ class CourseDraftRepository {
                 .param("coverUrl", request.coverUrl())
                 .param("requirements", request.learningRequirements())
                 .param("actor", actor)
-                .param("createdAt", now)
-                .param("updatedAt", now)
+                .param("createdAt", now.atOffset(ZoneOffset.UTC))
+                .param("updatedAt", now.atOffset(ZoneOffset.UTC))
                 .update();
         return find(id).orElseThrow();
     }
@@ -65,7 +66,7 @@ class CourseDraftRepository {
                 .param("coverUrl", request.coverUrl())
                 .param("requirements", request.learningRequirements())
                 .param("version", request.version())
-                .param("updatedAt", now)
+                .param("updatedAt", now.atOffset(ZoneOffset.UTC))
                 .update() == 1;
     }
 
